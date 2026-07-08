@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>加页手记 · 导航助手</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}:root{--bg:#f5f3f0;--card:#ffffff;--text:#1e1e1e;--text-secondary:#5a5a5a;--border:#d9d4ce;--accent:#b8a99a;--accent-light:#e8e0d8;--shadow:0 2px 12px rgba(0,0,0,0.06);--radius:16px;--font:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;--safe-bottom:env(safe-area-inset-bottom,0px)}html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--text);font-size:16px;-webkit-tap-highlight-color:transparent;overflow:hidden}#app{display:flex;flex-direction:column;height:100%;max-width:480px;margin:0 auto;background:var(--bg);position:relative;overflow:hidden;box-shadow:0 0 30px rgba(0,0,0,0.04)}.app-header{height:100px;flex-shrink:0;position:relative;background:var(--bg);border-bottom:1px solid var(--border);z-index:10}.app-header .header-title{position:absolute;left:50%;transform:translateX(-50%);bottom:20px;font-size:18px;font-weight:600;color:var(--text);letter-spacing:0.5px;white-space:nowrap}.app-header .header-title small{font-weight:400;font-size:13px;color:var(--text-secondary);margin-left:6px}.app-header .header-btn{position:absolute;left:16px;bottom:20px;background:none;border:none;font-size:15px;color:var(--text-secondary);cursor:pointer;padding:4px 6px;font-family:var(--font);transition:color 0.2s;font-weight:450;display:flex;align-items:center;gap:4px;height:24px;line-height:24px}.app-header .header-btn:active{color:var(--text)}.bottom-nav{flex-shrink:0;display:flex;background:var(--card);border-top:1px solid var(--border);padding-bottom:var(--safe-bottom);height:calc(60px + var(--safe-bottom));min-height:calc(60px + var(--safe-bottom));box-shadow:0 -2px 8px rgba(0,0,0,0.04)}.bottom-nav .nav-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:none;border:none;font-family:var(--font);font-size:12px;color:var(--text-secondary);cursor:pointer;transition:color 0.2s,background 0.2s;padding:6px 0 4px 0;gap:2px}.bottom-nav .nav-tab.active{color:var(--accent);background:var(--accent-light)}.bottom-nav .nav-tab .tab-icon{font-size:22px;line-height:1.2}.bottom-nav .nav-tab .tab-label{font-size:11px;font-weight:500}#appContent{flex:1;overflow:hidden;position:relative}.tab-content{display:none;height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}.tab-content.active{display:block}.tab-content::-webkit-scrollbar{width:0;background:transparent}.page{display:none;padding:16px 20px 20px 20px;animation:fadeUp 0.28s ease}.page.active{display:block}@keyframes fadeUp{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:translateY(0)}}.card{background:var(--card);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);margin-bottom:14px;border:1px solid #eeeae6}.card-title{font-size:15px;font-weight:500;color:var(--text-secondary);margin-bottom:10px;letter-spacing:0.3px}.map-list{display:flex;flex-direction:column;gap:10px}.map-item{padding:18px 16px;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);cursor:pointer;transition:all 0.18s;font-size:18px;font-weight:500;letter-spacing:0.3px;color:var(--text);box-shadow:var(--shadow);text-align:left}.map-item:active{transform:scale(0.98);background:#f0ece8}.map-item .sub{font-weight:400;font-size:13px;color:var(--text-secondary);margin-left:12px}.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.diff-card{background:var(--card);border-radius:var(--radius);padding:18px 12px;border:1px solid var(--border);text-align:center;cursor:pointer;transition:all 0.18s;box-shadow:var(--shadow)}.diff-card:active{transform:scale(0.96)}.diff-card .diff-name{font-size:17px;font-weight:500}.diff-card .diff-count{font-size:13px;color:var(--text-secondary);margin-top:4px}.back-row{display:flex;align-items:center;gap:8px;margin-bottom:16px;cursor:pointer;font-size:15px;color:var(--text-secondary);padding:4px 0}.back-row:hover{color:var(--text)}.back-row span{font-size:18px;line-height:1}.node-item{display:flex;align-items:center;gap:14px;padding:12px 14px;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:10px;cursor:pointer;transition:all 0.18s;box-shadow:var(--shadow)}.node-item:active{transform:scale(0.98)}.node-item.active{border-color:var(--accent);background:var(--accent-light);box-shadow:0 0 0 2px #b8a99a40}.node-item .thumb{width:52px;height:52px;border-radius:10px;background:var(--accent-light);flex-shrink:0;overflow:hidden;border:1px solid #eee;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text-secondary)}.node-item .thumb img{width:100%;height:100%;object-fit:cover;display:block}.node-item .info{flex:1;min-width:0}.node-item .info .name{font-size:16px;font-weight:500}.node-item .info .meta{font-size:13px;color:var(--text-secondary);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.node-item .info .steps-preview{font-size:12px;color:#aaa;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.node-item .actions{display:flex;gap:6px;flex-shrink:0}.node-item .actions button{background:none;border:none;font-size:18px;cursor:pointer;padding:4px 6px;color:var(--text-secondary);transition:color 0.2s}.node-item .actions button:hover{color:var(--text)}.node-item .actions button.danger:hover{color:#c0392b}#voiceNodeSelectWrap{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}#voiceNodeSelectWrap .select-label{font-size:14px;color:var(--text-secondary);font-weight:500}#voiceNodeSelectWrap .select-btn{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;font-size:15px;color:var(--text-secondary);box-shadow:var(--shadow);transition:all 0.18s}#voiceNodeSelectWrap .select-btn:active{transform:scale(0.98)}#voiceNodeSelectWrap .select-btn .current-name{color:var(--text);font-weight:500}#voiceNodeSelectWrap .select-btn .arrow{font-size:18px}.modal-mask{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:999;display:none;align-items:center;justify-content:center;padding:20px;animation:fadeInMask 0.2s ease}.modal-mask.show{display:flex}@keyframes fadeInMask{0%{opacity:0}100%{opacity:1}}.modal-box{background:var(--card);border-radius:var(--radius);max-width:360px;width:100%;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,0.2);animation:slideUp 0.25s ease}@keyframes slideUp{0%{opacity:0;transform:translateY(40px)}100%{opacity:1;transform:translateY(0)}}.modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 0 18px}.modal-header h4{font-size:16px;font-weight:600}.modal-header .close-btn{background:none;border:none;font-size:22px;color:var(--text-secondary);cursor:pointer;line-height:1}.modal-list{flex:1;overflow-y:auto;padding:12px 18px 18px 18px}.modal-list .node-option{display:flex;align-items:center;padding:12px 10px;border-radius:10px;margin-bottom:4px;cursor:pointer;transition:background 0.15s;font-size:15px;font-weight:500}.modal-list .node-option:hover{background:var(--accent-light)}.modal-list .node-option:active{background:#ddd5cd}.modal-list .node-option .dir{color:var(--accent);margin-right:6px}.modal-list .node-option .shape{color:var(--text)}.modal-list .node-option .alias-hint{font-weight:400;font-size:12px;color:var(--text-secondary);margin-left:8px}
+        .modal-list .group-divider{font-size:13px;font-weight:600;color:var(--text-secondary);margin:12px 0 4px 4px;padding-bottom:3px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px}
+        .modal-list .group-divider .badge{font-weight:400;font-size:11px;color:#aaa;background:var(--accent-light);padding:0 8px;border-radius:10px}
+        #voiceFullmapContainer{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px;min-height:160px;display:flex;align-items:center;justify-content:center;position:relative}#voiceFullmapContainer .fullmap-img{display:block;width:100%;height:auto;max-height:320px;object-fit:contain;background:#f0ece8;cursor:zoom-in}#voiceFullmapContainer .fullmap-empty{padding:40px 16px;text-align:center;color:var(--text-secondary);font-size:14px}#voiceFullmapContainer .fullmap-empty .icon{font-size:28px;opacity:0.4;margin-bottom:8px}.zoom-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:1000;align-items:center;justify-content:center;padding:10px;overflow:hidden;touch-action:none}.zoom-modal.show{display:flex}.zoom-modal img{max-width:100%;max-height:90vh;object-fit:contain;border-radius:4px;cursor:zoom-out;touch-action:none;transform-origin:center center}.nav-step-box{background:var(--card);border-radius:var(--radius);padding:24px 20px;border:1px solid var(--border);box-shadow:var(--shadow);text-align:center;margin-bottom:16px;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center}.nav-step-box .step-number{font-size:13px;color:var(--text-secondary);margin-bottom:6px}.nav-step-box .step-text{font-size:22px;font-weight:500;line-height:1.4;word-break:break-word}.nav-step-box .step-empty{color:#bbb;font-size:16px}.nav-step-box .step-progress{font-size:13px;color:var(--text-secondary);margin-top:8px}.step-nav-buttons{display:flex;gap:16px;justify-content:center;margin-bottom:12px}.step-nav-buttons button{padding:12px 28px;border-radius:var(--radius);border:1px solid var(--border);background:var(--card);font-size:16px;font-weight:500;color:var(--text);cursor:pointer;box-shadow:var(--shadow);transition:all 0.18s;font-family:var(--font);flex:1;max-width:160px}.step-nav-buttons button:active{transform:scale(0.96)}.step-nav-buttons button:disabled{opacity:0.4;cursor:not-allowed}.voice-controls{display:flex;gap:12px;margin-bottom:12px;align-items:center;justify-content:center}.voice-controls .voice-btn{flex:0 0 auto;padding:14px 20px;border:none;border-radius:var(--radius);background:var(--card);border:1px solid var(--border);font-size:18px;font-weight:500;color:var(--text);cursor:pointer;transition:all 0.2s;box-shadow:var(--shadow);font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:8px}.voice-controls .voice-btn:active{transform:scale(0.97)}.voice-controls .voice-btn .dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:#bbb;transition:background 0.3s}.voice-controls .voice-btn .dot.listening{background:#27ae60;animation:pulse-dot 1.2s infinite}.voice-controls .voice-btn .dot.speaking{background:#f39c12;animation:pulse-dot 0.8s infinite}@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)}}.voice-recording-status{text-align:center;font-size:14px;color:var(--text-secondary);padding:4px 0 12px 0;line-height:1.6}.voice-recording-status .rec-icon{display:inline-block;width:10px;height:10px;border-radius:50%;background:#bbb;margin-right:6px;vertical-align:middle}.voice-recording-status .rec-icon.active{background:#e74c3c;animation:blink 1s infinite}@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}.voice-recording-status .rec-icon.inactive{background:#bbb;animation:none}.voice-status{text-align:center;font-size:13px;color:var(--text-secondary);padding:4px 0}.voice-status .highlight{color:var(--text);font-weight:500}.edit-form .form-group{margin-bottom:16px}.edit-form label{display:block;font-size:14px;font-weight:500;color:var(--text-secondary);margin-bottom:4px}.edit-form input,.edit-form textarea,.edit-form select{width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--border);font-size:15px;font-family:var(--font);background:var(--card);transition:border 0.2s;color:var(--text)}.edit-form input:focus,.edit-form textarea:focus{outline:none;border-color:#b8a99a}.edit-form textarea{resize:vertical;min-height:60px}.edit-form .row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.edit-form .alias-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.edit-form .alias-tag{background:var(--accent-light);padding:2px 12px;border-radius:20px;font-size:13px;color:var(--text-secondary);display:inline-flex;align-items:center;gap:6px}.edit-form .alias-tag .remove{cursor:pointer;font-size:15px;line-height:1;color:#999}.edit-form .alias-tag .remove:hover{color:#c0392b}.edit-form .btn{padding:10px 20px;border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;font-family:var(--font);transition:all 0.2s;background:var(--accent-light);color:var(--text)}.edit-form .btn:active{transform:scale(0.96)}.edit-form .btn-primary{background:#b8a99a;color:#fff}.edit-form .btn-primary:hover{background:#a89888}.edit-form .btn-danger{background:#e74c3c;color:#fff}.edit-form .btn-danger:hover{background:#c0392b}.edit-form .btn-sm{padding:6px 14px;font-size:13px}.edit-form .img-upload-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.edit-form .img-upload-row .preview{width:72px;height:72px;border-radius:10px;background:var(--accent-light);overflow:hidden;border:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-secondary)}.edit-form .img-upload-row .preview img{width:100%;height:100%;object-fit:cover;display:block}.edit-form .img-upload-row .upload-btn{padding:6px 14px;border:1px dashed var(--border);border-radius:8px;background:none;cursor:pointer;font-size:13px;color:var(--text-secondary);font-family:var(--font);transition:border 0.2s}.edit-form .img-upload-row .upload-btn:hover{border-color:#b8a99a}.settings-group{margin-bottom:20px}.settings-group .group-title{font-size:14px;font-weight:500;color:var(--text-secondary);margin-bottom:10px}.settings-slider{display:flex;align-items:center;gap:12px;margin-bottom:10px}.settings-slider label{font-size:14px;color:var(--text-secondary);min-width:44px}.settings-slider input[type="range"]{flex:1;accent-color:#b8a99a;height:4px;background:var(--border);border-radius:4px;-webkit-appearance:none;appearance:none}.settings-slider input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:#b8a99a;cursor:pointer}.settings-slider .value{font-size:14px;color:var(--text);min-width:32px;text-align:right}.settings-voice-upload{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.settings-voice-upload .file-label{padding:6px 16px;border:1px dashed var(--border);border-radius:8px;cursor:pointer;font-size:13px;color:var(--text-secondary);font-family:var(--font);transition:border 0.2s}.settings-voice-upload .file-label:hover{border-color:#b8a99a}.settings-voice-upload .file-label input{display:none}.settings-voice-upload .status{font-size:13px;color:var(--text-secondary)}.settings-voice-upload .file-clear{font-size:13px;cursor:pointer;color:#e74c3c;border:none;background:none;font-family:var(--font)}.empty-state{text-align:center;padding:40px 16px;color:var(--text-secondary);font-size:15px}.empty-state .icon{font-size:32px;margin-bottom:12px;opacity:0.5}.empty-state .hint{font-size:13px;color:#bbb;margin-top:6px}.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#e74c3c;color:#fff;padding:10px 24px;border-radius:30px;font-size:14px;font-family:var(--font);box-shadow:0 4px 16px rgba(0,0,0,0.2);z-index:1000;display:none;max-width:90%;text-align:center;animation:fadeInToast 0.3s ease}@keyframes fadeInToast{0%{opacity:0;transform:translateX(-50%) translateY(20px)}100%{opacity:1;transform:translateX(-50%) translateY(0)}}@media (max-width:420px){.nav-step-box .step-text{font-size:19px}.node-item{padding:10px 12px}.node-item .thumb{width:44px;height:44px}}@media (min-width:600px){#app{border-left:1px solid var(--border);border-right:1px solid var(--border)}}
+        #cropModal .modal-box{max-width:95%;max-height:95vh;width:auto;min-width:300px}
+        #cropModal .modal-body{position:relative;padding:12px;text-align:center;overflow:hidden;flex:1;display:flex;align-items:center;justify-content:center;min-height:240px}
+        #cropModal .modal-body canvas{max-width:100%;max-height:65vh;cursor:crosshair;touch-action:none;display:block;border-radius:8px;background:#f0ece8}
+        #cropModal .modal-footer{padding:12px 18px;display:flex;gap:12px;justify-content:flex-end;border-top:1px solid var(--border);flex-shrink:0}
+        #cropModal .modal-footer .btn{padding:8px 24px;border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;font-family:var(--font)}
+        #cropModal .modal-footer .btn-cancel{background:var(--accent-light);color:var(--text)}
+        #cropModal .modal-footer .btn-confirm{background:#b8a99a;color:#fff}
+        #cropModal .modal-footer .btn:active{transform:scale(0.96)}
+        #cropModal .crop-hint{font-size:13px;color:var(--text-secondary);margin:4px 0 8px 0;text-align:center}
+        .group-divider{font-size:14px;font-weight:600;color:var(--text-secondary);margin:14px 0 8px 4px;padding-bottom:4px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px}
+        .group-divider .badge{font-weight:400;font-size:12px;color:#aaa;background:var(--accent-light);padding:0 10px;border-radius:12px}
+        .node-item-wrap{margin-bottom:6px}
+        .sync-btn{padding:8px 18px;border:none;border-radius:10px;background:var(--accent);color:#fff;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font);transition:background 0.2s;display:inline-flex;align-items:center;gap:6px}
+        .sync-btn:active{transform:scale(0.96)}
+        .sync-btn:disabled{opacity:0.5;pointer-events:none}
+        .url-input-group{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+        .url-input-group input{flex:1;min-width:160px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);font-size:14px;font-family:var(--font);background:var(--card)}
+        .url-input-group .hint{font-size:12px;color:#aaa;margin-top:4px;width:100%}
+    </style>
+    <meta name="AIGC" content='{"AIGC":{"Label":"2","ContentProducer":"WUSIGRAM","ProduceID":"EwImzZya+H4ptTTfLVSHbvyc0iDr8KN4z/PGVvpgBjs=","ReservedCode1":"tyNzAH3T/aun2pPL2v+t+ZUjwc/PPu78+p5NJdW9hx1cl+R4lF66hf/LwLDC1e8RZLmq2Vc6Yo6EAVGmwTNdJw==","ContentPropagator":"","PropagateID":"","ReservedCode2":""}}'>
+</head>
+<body>
+<div id="app">
+    <header class="app-header" id="appHeader">
+        <button class="header-btn" id="headerBtn" style="display:none;"><span id="headerBtnIcon">‹</span> <span id="headerBtnText">返回</span></button>
+        <div class="header-title" id="headerTitle">加页手记 <small>导航助手</small></div>
+    </header>
+    <main id="appContent">
+        <!-- 地图 Tab -->
+        <div class="tab-content active" id="mapTabContent">
+            <div class="page active" id="page-home">
+                <div class="map-list" id="homeMapList"></div>
+                <div style="height:12px;"></div>
+            </div>
+            <div class="page" id="page-map-detail">
+                <div class="back-row" id="detailBack"><span>‹</span> 返回</div>
+                <h3 style="font-weight:500;margin-bottom:14px;font-size:18px;" id="detailMapTitle"></h3>
+                <div class="diff-grid" id="detailDiffGrid"></div>
+                <div style="height:12px;"></div>
+            </div>
+            <div class="page" id="page-node-list">
+                <div class="back-row" id="nodeListBack"><span>‹</span> 返回</div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:6px;">
+                    <span style="font-size:15px;color:var(--text-secondary);" id="nodeListTitle"></span>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                        <button class="edit-form btn btn-sm" id="nodeListAddBtn" style="background:var(--accent-light);">+ 添加节点</button>
+                        <!-- 新增：同步缩略图按钮（仅当有图片源URL时显示） -->
+                        <button class="edit-form btn btn-sm sync-btn" id="syncThumbBtn" style="background:var(--accent);color:#fff;display:none;">📥 同步缩略图</button>
+                    </div>
+                </div>
+                <div id="nodeListContainer"></div>
+                <div style="height:12px;"></div>
+            </div>
+            <div class="page" id="page-edit">
+                <div class="back-row" id="editBack"><span>‹</span> 返回</div>
+                <h3 style="font-weight:500;margin-bottom:14px;font-size:18px;" id="editPageTitle">编辑节点</h3>
+                <div class="card edit-form" id="editFormContainer"><div id="editFormContent"></div></div>
+                <div style="height:12px;"></div>
+            </div>
+        </div>
+        <!-- 语音 Tab -->
+        <div class="tab-content" id="voiceTabContent">
+            <div class="page active" id="page-voice">
+                <div class="voice-mode-label">当前模式</div>
+                <div class="voice-mode-selectors">
+                    <select id="voiceMapSelect"></select>
+                    <select id="voiceDiffSelect"></select>
+                </div>
+                <div id="voiceNodeSelectWrap">
+                    <label class="select-label">选择节点</label>
+                    <div class="select-btn" id="selectNodeBtn"><span class="current-name" id="selectNodeName">-- 未选择 --</span><span class="arrow">▾</span></div>
+                </div>
+                <div id="voiceFullmapContainer">
+                    <div class="fullmap-empty" id="voiceFullmapEmpty"><div class="icon">🖼️</div>选择节点后显示完整地图</div>
+                    <img id="voiceFullmapImg" class="fullmap-img" style="display:none;" alt="完整地图">
+                </div>
+                <div class="nav-step-box" id="navStepBox">
+                    <div class="step-number" id="navStepNumber"></div>
+                    <div class="step-text" id="navStepText">准备就绪</div>
+                    <div class="step-progress" id="navStepProgress"></div>
+                </div>
+                <div class="step-nav-buttons">
+                    <button id="prevStepBtn" disabled>上一步</button>
+                    <button id="nextStepBtn" disabled>下一步</button>
+                </div>
+                <div class="voice-controls">
+                    <button class="voice-btn" id="navVoiceBtn">
+                        <span class="dot" id="navVoiceDot"></span>
+                        <span id="navVoiceLabel">开始录音</span>
+                    </button>
+                </div>
+                <div class="voice-recording-status" id="voiceRecordingStatus">
+                    <span class="rec-icon inactive" id="recIcon"></span>
+                    <span id="recStatusText">点击「开始录音」后持续聆听，再次点击停止</span>
+                </div>
+                <div class="voice-status">语音识别状态：<span class="highlight" id="navStateLabel">空闲</span></div>
+                <div style="height:12px;"></div>
+            </div>
+        </div>
+        <!-- 设置 Tab -->
+        <div class="tab-content" id="settingsTabContent">
+            <div class="page active" id="page-settings">
+                <h3 style="font-weight:500;margin-bottom:16px;font-size:18px;">语音设置</h3>
+                <div class="card settings-group">
+                    <div class="group-title">语速</div>
+                    <div class="settings-slider">
+                        <label>慢</label>
+                        <input type="range" id="speedSlider" min="0.5" max="2.0" step="0.1" value="1.0">
+                        <span class="value" id="speedValue">1.0</span>
+                    </div>
+                </div>
+                <div class="card settings-group">
+                    <div class="group-title">音调</div>
+                    <div class="settings-slider">
+                        <label>低</label>
+                        <input type="range" id="pitchSlider" min="0.5" max="2.0" step="0.1" value="1.0">
+                        <span class="value" id="pitchValue">1.0</span>
+                    </div>
+                </div>
+                <div class="card settings-group">
+                    <div class="group-title">音色</div>
+                    <div class="settings-slider" style="flex-wrap:wrap;">
+                        <label style="min-width:auto;">选择</label>
+                        <select id="voiceSelect" style="flex:1;padding:6px 10px;border-radius:8px;border:1px solid var(--border);font-family:var(--font);font-size:14px;background:var(--card);"></select>
+                    </div>
+                </div>
+                <div class="card settings-group">
+                    <div class="group-title">自定义语音包（替换 TTS）</div>
+                    <div class="settings-voice-upload">
+                        <label class="file-label">选择音频文件<input type="file" id="voiceFileInput" accept="audio/*"></label>
+                        <span class="status" id="voiceFileStatus">未上传</span>
+                        <button class="file-clear" id="voiceFileClear">清除</button>
+                    </div>
+                    <div style="font-size:12px;color:#aaa;margin-top:8px;">支持 MP3 / WAV / OGG</div>
+                </div>
+                <!-- ===== 新增：图片源 URL 设置 ===== -->
+                <div class="card settings-group">
+                    <div class="group-title">🖼️ 缩略图网络同步</div>
+                    <div class="url-input-group">
+                        <input type="text" id="imageBaseUrl" placeholder="例如 https://raw.githubusercontent.com/用户名/仓库/main/">
+                        <button class="sync-btn" id="saveImageUrlBtn" style="background:var(--accent);color:#fff;">保存</button>
+                    </div>
+                    <div class="hint">设置图片基础URL后，节点缩略图会自动从该地址加载（文件名规则：方向-形状.jpg，如“右-左上右下.jpg”）</div>
+                    <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
+                        <button class="sync-btn" id="batchSyncThumbBtn" style="background:var(--accent);color:#fff;">📥 批量同步所有节点缩略图</button>
+                        <span id="syncProgress" style="font-size:13px;color:var(--text-secondary);align-self:center;"></span>
+                    </div>
+                </div>
+                <div style="height:12px;"></div>
+            </div>
+        </div>
+    </main>
+    <nav class="bottom-nav" id="bottomNav">
+        <button class="nav-tab active" data-tab="map"><span class="tab-icon">🗺️</span><span class="tab-label">地图</span></button>
+        <button class="nav-tab" data-tab="voice"><span class="tab-icon">🎙️</span><span class="tab-label">语音</span></button>
+        <button class="nav-tab" data-tab="settings"><span class="tab-icon">⚙️</span><span class="tab-label">设置</span></button>
+    </nav>
+    <div class="modal-mask" id="nodeSelectModal">
+        <div class="modal-box">
+            <div class="modal-header"><h4>选择节点</h4><button class="close-btn" id="closeNodeSelectModal">✕</button></div>
+            <div class="modal-list" id="nodeSelectList"></div>
+        </div>
+    </div>
+    <div class="zoom-modal" id="zoomModal"><img id="zoomMapImg" src="" alt="完整地图"></div>
+    <div class="modal-mask" id="cropModal">
+        <div class="modal-box" style="max-width:95%;max-height:95vh;width:auto;min-width:300px;">
+            <div class="modal-header"><h4>✂️ 从全图截取缩略图</h4><button class="close-btn" id="closeCropModal">✕</button></div>
+            <div class="crop-hint">在图片上拖拽选择区域，松开后确认截取</div>
+            <div class="modal-body" id="cropModalBody">
+                <canvas id="cropCanvas"></canvas>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" id="cancelCropBtn">取消</button>
+                <button class="btn btn-confirm" id="confirmCropBtn">✓ 确认截取</button>
+            </div>
+        </div>
+    </div>
+    <div class="toast" id="toast"></div>
+</div>
+
+<script>
+    // ================================================================
+    //  私有 API 模拟
+    // ================================================================
+    if (!window.wusiStorage) {
+        window.wusiStorage = {
+            _prefix: 'jaye_',
+            getItem(key) {
+                try {
+                    const raw = localStorage.getItem(this._prefix + key);
+                    if (raw === null) return null;
+                    return JSON.parse(raw);
+                } catch(_) { return null; }
+            },
+            async setItem(key, value) {
+                localStorage.setItem(this._prefix + key, JSON.stringify(value));
+            },
+            async removeItem(key) {
+                localStorage.removeItem(this._prefix + key);
+            },
+            async clear() {
+                const keys = Object.keys(localStorage).filter(k => k.startsWith(this._prefix));
+                keys.forEach(k => localStorage.removeItem(k));
+            },
+            getAll() {
+                const result = {};
+                const prefix = this._prefix;
+                for (let key in localStorage) {
+                    if (key.startsWith(prefix)) {
+                        try { result[key.slice(prefix.length)] = JSON.parse(localStorage[key]); } catch(_) {}
+                    }
+                }
+                return result;
+            }
+        };
+    }
+
+    if (!window.wusiFile) {
+        window.wusiFile = {
+            _dbName: 'jaye_files',
+            _storeName: 'files',
+            async _getDB() {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open(this._dbName, 1);
+                    request.onupgradeneeded = (event) => {
+                        const db = event.target.result;
+                        if (!db.objectStoreNames.contains(this._storeName)) {
+                            db.createObjectStore(this._storeName, { keyPath: 'name' });
+                        }
+                    };
+                    request.onsuccess = (event) => resolve(event.target.result);
+                    request.onerror = () => reject(request.error);
+                });
+            },
+            async save(filename, src) {
+                const db = await this._getDB();
+                let data;
+                if (src instanceof Blob || src instanceof File) {
+                    data = src;
+                } else if (typeof src === 'string' && src.startsWith('data:')) {
+                    const res = await fetch(src);
+                    data = await res.blob();
+                } else if (typeof src === 'string' && src.startsWith('http')) {
+                    const res = await fetch(src);
+                    data = await res.blob();
+                } else {
+                    throw new Error('Unsupported src type');
+                }
+                return new Promise((resolve, reject) => {
+                    const tx = db.transaction(this._storeName, 'readwrite');
+                    const store = tx.objectStore(this._storeName);
+                    store.put({ name: filename, blob: data });
+                    tx.oncomplete = () => resolve();
+                    tx.onerror = () => reject(tx.error);
+                });
+            },
+            async read(filename) {
+                const db = await this._getDB();
+                return new Promise((resolve, reject) => {
+                    const tx = db.transaction(this._storeName, 'readonly');
+                    const store = tx.objectStore(this._storeName);
+                    const request = store.get(filename);
+                    request.onsuccess = () => {
+                        if (request.result) resolve(request.result.blob);
+                        else reject(new Error('File not found: ' + filename));
+                    };
+                    request.onerror = () => reject(request.error);
+                });
+            },
+            async delete(filename) {
+                const db = await this._getDB();
+                return new Promise((resolve, reject) => {
+                    const tx = db.transaction(this._storeName, 'readwrite');
+                    const store = tx.objectStore(this._storeName);
+                    store.delete(filename);
+                    tx.oncomplete = () => resolve();
+                    tx.onerror = () => reject(tx.error);
+                });
+            },
+            async list(ext) {
+                const db = await this._getDB();
+                return new Promise((resolve, reject) => {
+                    const tx = db.transaction(this._storeName, 'readonly');
+                    const store = tx.objectStore(this._storeName);
+                    const request = store.getAllKeys();
+                    request.onsuccess = () => {
+                        let names = request.result || [];
+                        if (ext) names = names.filter(n => n.endsWith(ext));
+                        resolve(names);
+                    };
+                    request.onerror = () => reject(request.error);
+                });
+            }
+        };
+    }
+
+    // ================================================================
+    //  数据层
+    // ================================================================
+    const STORAGE_KEY = 'jaye_navigation_data';
+    const SETTINGS_KEY = 'jaye_settings';
+    const BACKUP_KEY = STORAGE_KEY + '_backup';
+    const DEFAULT_MAPBOOKS = ['厄运之女', '消融的雪国', '磷光症', '罪之华'];
+    const DEFAULT_DIFFICULTIES = ['新手', '简单', '普通', '困难', '噩梦'];
+
+    function splitSteps(text) {
+        return text.split(/[，。]/).map(s => s.trim()).filter(s => s.length > 0);
+    }
+
+    function getAliases(shape) {
+        const aliases = [shape];
+        const short = shape.replace(/门$/, '');
+        if (short && short !== shape) aliases.push(short);
+        return aliases;
+    }
+
+    function genId() {
+        return Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,7);
+    }
+
+    function getMapName(idx) {
+        const d = app.data;
+        return (d.mapBooks && d.mapBooks[idx]) ? d.mapBooks[idx] : '未知地图';
+    }
+
+    function getDiffName(idx) {
+        const d = app.data;
+        return (d.difficulties && d.difficulties[idx]) ? d.difficulties[idx] : '未知难度';
+    }
+
+    function getNodesFor(mapIdx, diffIdx) {
+        return app.data.nodes.filter(n => n.mapBookIndex === mapIdx && n.difficultyIndex === diffIdx);
+    }
+
+    function getNodeById(id) {
+        return app.data.nodes.find(n => n.id === id);
+    }
+
+    function deleteNode(id) {
+        const idx = app.data.nodes.findIndex(n => n.id === id);
+        if (idx !== -1) {
+            const node = app.data.nodes[idx];
+            if (node.thumbnail) wusiFile.delete(node.thumbnail).catch(()=>{});
+            if (node.fullMap) wusiFile.delete(node.fullMap).catch(()=>{});
+            app.data.nodes.splice(idx, 1);
+            saveData(app.data).catch(() => {});
+        }
+    }
+
+    // ================================================================
+    //  数据加载与保存
+    // ================================================================
+    function loadData() {
+        let raw = null;
+        try {
+            raw = wusiStorage.getItem(STORAGE_KEY);
+        } catch (_) {}
+        if (typeof raw === 'string') {
+            try { raw = JSON.parse(raw); } catch(_) { raw = null; }
+        }
+        if (raw && raw.nodes && Array.isArray(raw.nodes)) {
+            raw.nodes = raw.nodes.map(n => ({
+                ...n,
+                aliases: n.aliases || [],
+                steps: n.steps || [],
+                thumbnail: n.thumbnail || '',
+                fullMap: n.fullMap || ''
+            }));
+            return raw;
+        }
+        try {
+            const backup = wusiStorage.getItem(BACKUP_KEY);
+            if (backup && backup.nodes && Array.isArray(backup.nodes)) {
+                backup.nodes = backup.nodes.map(n => ({
+                    ...n,
+                    aliases: n.aliases || [],
+                    steps: n.steps || [],
+                    thumbnail: n.thumbnail || '',
+                    fullMap: n.fullMap || ''
+                }));
+                wusiStorage.setItem(STORAGE_KEY, backup).catch(()=>{});
+                return backup;
+            }
+        } catch(_) {}
+        const def = getDefaultData();
+        wusiStorage.setItem(STORAGE_KEY, def).catch(()=>{});
+        return def;
+    }
+
+    async function saveData(data, retries = 3) {
+        for (let i = 0; i < retries; i++) {
+            try {
+                await wusiStorage.setItem(STORAGE_KEY, data);
+                await wusiStorage.setItem(BACKUP_KEY, data);
+                return;
+            } catch (e) {
+                console.warn('数据保存失败，重试', i + 1, e.message);
+                if (i < retries - 1) {
+                    await new Promise(r => setTimeout(r, 100));
+                }
+            }
+        }
+        showToast('数据保存失败，请检查环境');
+    }
+
+    function loadSettings() {
+        let raw = null;
+        try {
+            raw = wusiStorage.getItem(SETTINGS_KEY);
+        } catch(_) {}
+        if (typeof raw === 'string') try { raw = JSON.parse(raw); } catch(_) { raw = null; }
+        if (raw) {
+            return {
+                speed: raw.speed ?? 1.0,
+                pitch: raw.pitch ?? 1.0,
+                voiceName: raw.voiceName ?? '',
+                customVoice: raw.customVoice ?? '',
+                imageBaseUrl: raw.imageBaseUrl || ''
+            };
+        }
+        return { speed: 1.0, pitch: 1.0, voiceName: '', customVoice: '', imageBaseUrl: '' };
+    }
+
+    function saveSettings(settings) {
+        wusiStorage.setItem(SETTINGS_KEY, settings).catch(e => {
+            showToast('设置保存失败: ' + e.message);
+        });
+    }
+
+    // ================================================================
+    //  默认节点数据（为部分节点预设 thumbnail 文件名，以便网络同步）
+    // ================================================================
+    function getDefaultNodes() {
+        const rawNodes = [
+            { direction: '右', shape: '左上右下门', stepText: '进门右转，过楼梯间左转，右转路过黄房，顺路走到餐厅，走近门，出门左转，到悬空桌上二楼，左手边走前门，左转到图书馆上廊，跳去右手边，走后门，进门左手边会客厅，原路返回长廊左，走前门，到黄房右转，直走到尽头左转，顺楼梯下去到缪斯房' },
+            { direction: '右', shape: '双L门', stepText: '右转进门，右转，到气球房走右门，左转直走到尽头，左转到悬空桌，下来，出门直走到尽头，右转到缪斯房，从另一头的门出去，右手边有黄房，看一眼回来走左边的门，进门右转，再右转到楼梯间，左转，到蛤蟆房走左手边，左转到主卧' },
+            { direction: '左', shape: 'Y门', stepText: '左转，左转到断梯房，拿完原路出来直走从黄房出来，右转到主卧/左转到缪斯房，缪斯房另外一边出门右转，直走到餐厅，进餐厅走另一个门，出门直走路过黄房，继续直走到出口' },
+            { direction: '左', shape: '锤子门', stepText: '右转，路过黄房左转，右转进门，进楼梯间上楼，进喇叭口向着的门，直走到头左拐到餐厅，上二楼进门，右转进门到图书馆，从一楼出口出去，右转，左转到正门口。第二趟进正门，走右手边，进门左转，右转进图书长廊，没箱子就出门右转两次进左门，进门左转，进黄房，出来右转进悬空桌，（若图书长廊没箱子），上去右手边走后门，直走，路过黄房到上廊。缪斯房：从悬空桌下来往前走，左转一直走，一直往北走到缪斯房' },
+            { direction: '左', shape: '倒T门', stepText: '左转到黄房，出来左转，右转进门，出门左转到蛤蟆直走到黄房门口，不进，左转到主卧，走屏风门出去，直走到头，左转，直走到头，左转上悬空桌，下来出门直走右转到缪斯房' },
+            { direction: '左', shape: '对角门', stepText: '进黄房左转，右转进门，顺路走，左转进黄房，出门右转左转，再右转进黄房，出门左转，左手边安全房，顺路走到悬空桌，拿完下来走到缪斯房，回悬空桌上去，左手边前门，路过黄房，出来一直走，左手边主卧。出门左转到二楼出口，从二楼出口进，直走到T房左转，出门一直直走，右手边为会客厅，屏风门出来左转进门，右转到断梯' },
+            { direction: '南', shape: '三缺一门', stepText: '（进门正方向黄房看一眼）进门右转，左转进门，右转进门到图书馆，出门右转往北走到餐厅，走近门，右转到缪斯房，从另一头出去，右转，进主卧，出门右转，左转，进黄房。' },
+            { direction: '南', shape: '十字门', stepText: '左转进图书长廊，出门左转，左转，吊灯直走到缪斯房，往靠近487门走，一路走进黄房，出门右转看一眼，回来左转为餐厅，上楼进门直走进黄房，出门直走到上廊，右转进门，路过黄房，出门右手边为二楼出口。' },
+            { direction: '南', shape: 'L门', stepText: '往左走到餐厅，走487门出去，右转进门，连续弯路直走出去，左转到图书馆，出门左转进门，出门左转路过黄房，出门左转，左手边进罐子房，楼梯上去左转进门到主卧，屏风门出门左转右手边为二楼出口' },
+            { direction: '北', shape: '1门', stepText: '进会客厅，左转出门到餐厅，从487门出去，出门左转到头右转，再右转到罐子房，出门右转右转左转左转到缪斯房，从中间门出去直走进图书长廊，原路返回缪斯房，走远离487门，一路走路过黄房，出门顺路直走，路过黄房出门右转左转进T房，直走左手边出门' },
+            { direction: '北', shape: '4门', stepText: '出门右转，进门右转，左手边进断梯房，上二楼北门，进门顺路走，开门，左转开门，顺路走到悬空桌，跳下来往回走为缪斯房，回悬空桌左手边走后门，顺路走经过黄房，顺路走到卧室，从屏风门出去，岔路左转到主卧' },
+            { direction: '北', shape: '红门', stepText: '左转，右转，上楼梯，左转，再左转进主卧，原路返回楼梯进另一个门，走右边进会客厅，返回楼梯口走左边，右转走到尽头左转到缪斯房，从中间出去直走路过黄房，到尽头右转，左转，进餐厅，从二楼进门到图书馆。二楼进门左手边五床房，直走罐子房。' },
+            { direction: '北', shape: '凹门', stepText: '右转到餐厅，从近门出去，左转进第二个Y型路口，往右走进黄房，左转出门，左转，右转，左转右转开门直走，路过T房，直走到缪斯房，走靠近487门，左转，右转到五床房。第二趟从正门进左手边，一路走到罐子房，上二楼，往北走到尽头右手边二楼出口' },
+            { direction: '北', shape: 'T门', stepText: '右转进五床房，桌椅门出去，岔路口直走，右转到会客厅，从屏风门出，右转到餐厅，上二楼左转，左手边黄房可看一眼（不进），直走路过黄房，出门直走左转到悬空桌，下来往前走，出门左转右转到缪斯房。可去一楼右边探' },
+            { direction: '左', shape: '音叉门', stepText: '左转，再左转往北走，顺路走到黄房，出门看右手边黄房是否有箱子，然后进左手边五人房，从屏风门出门直走，路过二黄房，安全房，一直顺路走到缪斯房，看一眼中间门外的黄房，从远离487门出去，左转到图书长廊，出门顺路到悬空桌，上二楼走右手边前门，路过黄房，从中间出去，左手边出口，右手边主卧，出门左转为上廊，直走出去右转为Y走廊，岔路左转，右转进会客厅' },
+            { direction: '北', shape: '红对角门', stepText: '左转，右转进餐厅，回门口，走右手边门，进门右转到悬空桌（不上），走后门到断梯，左转进门，再左转为悬空桌二楼，回岔路口一路直走到上廊，跳下来，北门出去右转，路过安全房，黄房，进Y走廊，（可看一眼对面）往左转缪斯房，中间门出去直走到图书馆，上二楼进东门，左转为出口。二楼进门左转，右转左手边到主卧' },
+            { direction: '右', shape: '锤子门', stepText: '直走进图书长廊，出门左转，右转进T房，右转进Y字走廊，走左边到缪斯房，从远离487门出去，直走到餐厅，从进门出去，右转左转到T字房，直走出去，左转进悬空桌，上二楼进东北门，左转右转右转左转进黄房，出去右转到上廊，廊，跳对面往前顺路一直走到出口' }
+        ];
+
+        // 为每个节点生成 thumbnail 文件名（方向-形状去门+.jpg），方便网络同步
+        return rawNodes.map(n => {
+            const shapeBase = n.shape.replace(/门$/, '');
+            const thumbName = n.direction + '-' + shapeBase + '.jpg';
+            return {
+                id: genId(),
+                direction: n.direction,
+                shape: n.shape,
+                mapBookIndex: 0,
+                difficultyIndex: 3,
+                aliases: getAliases(n.shape),
+                steps: splitSteps(n.stepText),
+                thumbnail: thumbName,  // 预设文件名
+                fullMap: ''
+            };
+        });
+    }
+
+    function getDefaultData() {
+        return {
+            mapBooks: [...DEFAULT_MAPBOOKS],
+            difficulties: [...DEFAULT_DIFFICULTIES],
+            nodes: getDefaultNodes()
+        };
+    }
+
+    // ================================================================
+    //  文件辅助
+    // ================================================================
+    async function loadFileAsBlobURL(filename) {
+        if (!filename) return '';
+        try {
+            const blob = await wusiFile.read(filename);
+            return URL.createObjectURL(blob);
+        } catch (e) {
+            console.warn('读取文件失败:', filename, e);
+            return '';
+        }
+    }
+
+    async function loadFileAsDataURL(filename) {
+        if (!filename) return '';
+        try {
+            const blob = await wusiFile.read(filename);
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = () => reject(reader.error);
+                reader.readAsDataURL(blob);
+            });
+        } catch (e) {
+            console.warn('读取文件失败:', filename, e);
+            return '';
+        }
+    }
+
+    function generateFileName(ext) {
+        const now = new Date();
+        const ts = now.getFullYear() +
+            String(now.getMonth()+1).padStart(2,'0') +
+            String(now.getDate()).padStart(2,'0') + '_' +
+            String(now.getHours()).padStart(2,'0') +
+            String(now.getMinutes()).padStart(2,'0') +
+            String(now.getSeconds()).padStart(2,'0') + '_' +
+            Math.random().toString(36).slice(2,6);
+        return ts + ext;
+    }
+
+    // ================================================================
+    //  Toast
+    // ================================================================
+    let toastTimer = null;
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.style.display = 'block';
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+            toast.style.display = 'none';
+        }, 3000);
+    }
+
+    // ================================================================
+    //  应用核心对象
+    // ================================================================
+    const app = {
+        data: loadData(),
+        settings: loadSettings(),
+        navContext: null,
+        voiceState: 'idle',
+        isListening: false,
+        recognizer: null,
+        utterance: null,
+        currentMapIdx: 0,
+        currentDiffIdx: 3,
+        editingNodeId: null,
+        objectURLs: {},
+        _currentFullmapURL: null,
+        _recRestartCount: 0,
+        _cropData: null,
+        _tempNewFullMap: ''
+    };
+
+    // ================================================================
+    //  全屏缩放模态层
+    // ================================================================
+    let zoomState = { scale: 1, tx: 0, ty: 0 };
+    let zoomTouchStartState = {};
+    let zoomTouchStartDist = 0;
+    let zoomTouchStartX = 0, zoomTouchStartY = 0;
+    let zoomLastTapTime = 0;
+    let zoomEventsBound = false;
+
+    function getDistance(t1, t2) {
+        const dx = t1.clientX - t2.clientX;
+        const dy = t1.clientY - t2.clientY;
+        return Math.sqrt(dx*dx + dy*dy);
+    }
+
+    function applyZoomTransform() {
+        const img = document.getElementById('zoomMapImg');
+        img.style.transform = `translate(${zoomState.tx}px, ${zoomState.ty}px) scale(${zoomState.scale})`;
+    }
+
+    function onZoomTouchStart(e) {
+        e.preventDefault();
+        const touches = e.touches;
+        const now = Date.now();
+
+        if (touches.length === 2) {
+            zoomTouchStartDist = getDistance(touches[0], touches[1]);
+            zoomTouchStartState = { scale: zoomState.scale, tx: zoomState.tx, ty: zoomState.ty };
+            zoomLastTapTime = 0;
+        } else if (touches.length === 1) {
+            zoomTouchStartState = { scale: zoomState.scale, tx: zoomState.tx, ty: zoomState.ty };
+            zoomTouchStartX = touches[0].clientX;
+            zoomTouchStartY = touches[0].clientY;
+
+            if (now - zoomLastTapTime < 300) {
+                if (zoomState.scale === 1) {
+                    zoomState.scale = 2;
+                    zoomState.tx = 0;
+                    zoomState.ty = 0;
+                } else {
+                    zoomState.scale = 1;
+                    zoomState.tx = 0;
+                    zoomState.ty = 0;
+                }
+                applyZoomTransform();
+                zoomLastTapTime = 0;
+                return;
+            }
+            zoomLastTapTime = now;
+        }
+    }
+
+    function onZoomTouchMove(e) {
+        e.preventDefault();
+        const touches = e.touches;
+        if (touches.length === 2) {
+            const dist = getDistance(touches[0], touches[1]);
+            if (zoomTouchStartDist > 0) {
+                const factor = dist / zoomTouchStartDist;
+                zoomState.scale = Math.min(4, Math.max(0.5, zoomTouchStartState.scale * factor));
+                applyZoomTransform();
+            }
+        } else if (touches.length === 1) {
+            const dtX = touches[0].clientX - zoomTouchStartX;
+            const dtY = touches[0].clientY - zoomTouchStartY;
+            zoomState.tx = zoomTouchStartState.tx + dtX;
+            zoomState.ty = zoomTouchStartState.ty + dtY;
+            applyZoomTransform();
+        }
+    }
+
+    function onZoomTouchEnd(e) {
+        zoomTouchStartDist = 0;
+    }
+
+    function bindZoomEvents() {
+        if (zoomEventsBound) return;
+        const img = document.getElementById('zoomMapImg');
+        img.addEventListener('touchstart', onZoomTouchStart, { passive: false });
+        img.addEventListener('touchmove', onZoomTouchMove, { passive: false });
+        img.addEventListener('touchend', onZoomTouchEnd, { passive: false });
+        zoomEventsBound = true;
+    }
+
+    function unbindZoomEvents() {
+        if (!zoomEventsBound) return;
+        const img = document.getElementById('zoomMapImg');
+        img.removeEventListener('touchstart', onZoomTouchStart);
+        img.removeEventListener('touchmove', onZoomTouchMove);
+        img.removeEventListener('touchend', onZoomTouchEnd);
+        zoomEventsBound = false;
+    }
+
+    function openZoomMap(url) {
+        const modal = document.getElementById('zoomModal');
+        const img = document.getElementById('zoomMapImg');
+        img.src = url;
+        zoomState = { scale: 1, tx: 0, ty: 0 };
+        applyZoomTransform();
+        modal.classList.add('show');
+        bindZoomEvents();
+    }
+
+    function closeZoomMap() {
+        unbindZoomEvents();
+        document.getElementById('zoomModal').classList.remove('show');
+    }
+
+    document.getElementById('zoomModal').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeZoomMap();
+    });
+
+    // ================================================================
+    //  Tab 切换
+    // ================================================================
+    function switchTab(tabId) {
+        document.querySelectorAll('.bottom-nav .nav-tab').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.tab === tabId);
+        });
+        const mapContent = document.getElementById('mapTabContent');
+        const voiceContent = document.getElementById('voiceTabContent');
+        const settingsContent = document.getElementById('settingsTabContent');
+        mapContent.classList.toggle('active', tabId === 'map');
+        voiceContent.classList.toggle('active', tabId === 'voice');
+        settingsContent.classList.toggle('active', tabId === 'settings');
+
+        const headerTitle = document.getElementById('headerTitle');
+        const headerBtn = document.getElementById('headerBtn');
+        if (tabId === 'map') {
+            headerTitle.innerHTML = '加页手记 <small>导航助手</small>';
+            headerBtn.style.display = 'none';
+        } else if (tabId === 'voice') {
+            headerTitle.innerHTML = '语音导航';
+            headerBtn.style.display = 'none';
+        } else if (tabId === 'settings') {
+            headerTitle.innerHTML = '设置';
+            headerBtn.style.display = 'none';
+        }
+
+        if (tabId === 'voice') {
+            if (!app.isListening) startListening();
+            updateVoiceUI(app.navContext);
+            updateRecordingStatus();
+        }
+        if (tabId === 'settings') {
+            // 显示当前图片URL
+            document.getElementById('imageBaseUrl').value = app.settings.imageBaseUrl || '';
+        }
+    }
+
+    // ================================================================
+    //  地图渲染
+    // ================================================================
+    function renderHome() {
+        const container = document.getElementById('homeMapList');
+        const d = app.data;
+        container.innerHTML = d.mapBooks.map((name, idx) =>
+            `<div class="map-item" data-map-idx="${idx}">${name}<span class="sub">${d.difficulties.length}种难度</span></div>`
+        ).join('');
+        container.querySelectorAll('.map-item').forEach(el => {
+            el.addEventListener('click', () => {
+                app.currentMapIdx = parseInt(el.dataset.mapIdx);
+                renderMapDetail(app.currentMapIdx);
+                showMapPage('page-map-detail');
+            });
+        });
+    }
+
+    function showMapPage(pageId) {
+        document.querySelectorAll('#mapTabContent .page').forEach(p => p.classList.remove('active'));
+        const target = document.getElementById(pageId);
+        if (target) target.classList.add('active');
+        document.getElementById('mapTabContent').scrollTop = 0;
+        // 显示同步按钮（如果有图片URL）
+        const syncBtn = document.getElementById('syncThumbBtn');
+        if (pageId === 'page-node-list') {
+            syncBtn.style.display = app.settings.imageBaseUrl ? 'inline-flex' : 'none';
+        } else {
+            syncBtn.style.display = 'none';
+        }
+    }
+
+    function renderMapDetail(mapIdx) {
+        document.getElementById('detailMapTitle').textContent = getMapName(mapIdx);
+        const grid = document.getElementById('detailDiffGrid');
+        const d = app.data;
+        grid.innerHTML = d.difficulties.map((diffName, diffIdx) => {
+            const count = getNodesFor(mapIdx, diffIdx).length;
+            return `<div class="diff-card" data-diff-idx="${diffIdx}"><div class="diff-name">${diffName}</div><div class="diff-count">${count} 个节点</div></div>`;
+        }).join('');
+        grid.querySelectorAll('.diff-card').forEach(el => {
+            el.addEventListener('click', () => {
+                app.currentDiffIdx = parseInt(el.dataset.diffIdx);
+                renderNodeList(mapIdx, app.currentDiffIdx);
+                showMapPage('page-node-list');
+            });
+        });
+        document.getElementById('detailBack').onclick = () => {
+            showMapPage('page-home');
+        };
+    }
+
+    // ================================================================
+    //  按方向分组渲染节点列表 + 缩略图自动从网络加载
+    // ================================================================
+    async function renderNodeList(mapIdx, diffIdx) {
+        document.getElementById('nodeListTitle').textContent = `${getMapName(mapIdx)} · ${getDiffName(diffIdx)}`;
+        const container = document.getElementById('nodeListContainer');
+        const nodes = getNodesFor(mapIdx, diffIdx);
+
+        if (nodes.length === 0) {
+            container.innerHTML = `<div class="empty-state"><div class="icon">📭</div>暂无节点，点击「添加节点」创建<div class="hint">方向+形状，例如「右锤子门」</div></div>`;
+        } else {
+            const groups = {};
+            const dirOrder = ['左', '右', '南', '北', '东', '西', '其他'];
+            nodes.forEach(node => {
+                const dir = node.direction || '其他';
+                if (!groups[dir]) groups[dir] = [];
+                groups[dir].push(node);
+            });
+            const sortedEntries = Object.entries(groups).sort((a, b) => {
+                const ia = dirOrder.indexOf(a[0]);
+                const ib = dirOrder.indexOf(b[0]);
+                if (ia === -1 && ib === -1) return a[0].localeCompare(b[0]);
+                if (ia === -1) return 1;
+                if (ib === -1) return -1;
+                return ia - ib;
+            });
+
+            let html = '';
+            for (const [dir, dirNodes] of sortedEntries) {
+                html += `<div class="group-divider">${dir} <span class="badge">${dirNodes.length}个</span></div>`;
+                for (const node of dirNodes) {
+                    const stepPrev = (node.steps && node.steps.length > 0) ? node.steps[0] + (node.steps.length > 1 ? ` 等${node.steps.length}步` : '') : '无步骤';
+                    const aliasStr = (node.aliases || []).join('、') || '无';
+                    html += `<div class="node-item-wrap">
+                        <div class="node-item" data-node-id="${node.id}">
+                            <div class="thumb" id="thumb-${node.id}"><span>📷</span></div>
+                            <div class="info">
+                                <div class="name">${node.direction} · ${node.shape}</div>
+                                <div class="meta">别名: ${aliasStr}</div>
+                                <div class="steps-preview">${stepPrev}</div>
+                            </div>
+                            <div class="actions">
+                                <button class="edit-node-btn" data-node-id="${node.id}">✎</button>
+                                <button class="delete-node-btn" data-node-id="${node.id}" data-name="${node.direction}${node.shape}">✕</button>
+                            </div>
+                        </div>
+                    </div>`;
+                }
+            }
+            container.innerHTML = html;
+
+            // 加载缩略图：优先从IndexedDB，若不存在且有URL则从网络下载
+            for (const node of nodes) {
+                await loadThumbnailForNode(node);
+            }
+
+            // 事件绑定
+            container.querySelectorAll('.node-item').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    if (e.target.closest('.actions')) return;
+                    startNavigation(el.dataset.nodeId);
+                });
+            });
+            container.querySelectorAll('.edit-node-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => { e.stopPropagation(); openEditNode(btn.dataset.nodeId); });
+            });
+            container.querySelectorAll('.delete-node-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const id = btn.dataset.nodeId;
+                    const name = btn.dataset.name;
+                    if (confirm(`确定删除「${name}」吗？`)) {
+                        deleteNode(id);
+                        renderNodeList(mapIdx, diffIdx);
+                    }
+                });
+            });
+        }
+
+        document.getElementById('nodeListAddBtn').onclick = () => {
+            openEditNode(null, mapIdx, diffIdx);
+        };
+        document.getElementById('nodeListBack').onclick = () => {
+            renderMapDetail(mapIdx);
+            showMapPage('page-map-detail');
+        };
+        // 同步按钮
+        const syncBtn = document.getElementById('syncThumbBtn');
+        syncBtn.onclick = () => { batchSyncThumbnails(mapIdx, diffIdx); };
+        syncBtn.style.display = app.settings.imageBaseUrl ? 'inline-flex' : 'none';
+    }
+
+    // ================================================================
+    //  缩略图加载（从网络）
+    // ================================================================
+    async function loadThumbnailForNode(node) {
+        if (!node.thumbnail) return;
+        const thumbId = `thumb-${node.id}`;
+        const thumbDiv = document.getElementById(thumbId);
+        if (!thumbDiv) return;
+        // 检查是否已加载（有img子元素）
+        if (thumbDiv.querySelector('img')) return;
+
+        // 先从IndexedDB读取
+        try {
+            const blob = await wusiFile.read(node.thumbnail);
+            const url = URL.createObjectURL(blob);
+            thumbDiv.innerHTML = `<img src="${url}" alt="缩略图">`;
+            app.objectURLs[node.thumbnail] = url;
+            return;
+        } catch (e) {
+            // 不存在，尝试从网络加载
+            const baseUrl = app.settings.imageBaseUrl;
+            if (!baseUrl) return;
+            const fullUrl = baseUrl + node.thumbnail;
+            try {
+                const response = await fetch(fullUrl);
+                if (!response.ok) throw new Error('网络请求失败');
+                const blob = await response.blob();
+                if (blob.size < 100) throw new Error('图片太小');
+                // 保存到IndexedDB
+                await wusiFile.save(node.thumbnail, blob);
+                const url = URL.createObjectURL(blob);
+                thumbDiv.innerHTML = `<img src="${url}" alt="缩略图">`;
+                app.objectURLs[node.thumbnail] = url;
+            } catch (err) {
+                console.warn('加载网络缩略图失败:', node.thumbnail, err);
+                // 保留默认图标
+            }
+        }
+    }
+
+    // ================================================================
+    //  批量同步缩略图
+    // ================================================================
+    async function batchSyncThumbnails(mapIdx, diffIdx) {
+        const baseUrl = app.settings.imageBaseUrl;
+        if (!baseUrl) {
+            showToast('请先在设置中填写图片源URL');
+            return;
+        }
+        const nodes = getNodesFor(mapIdx, diffIdx);
+        let success = 0, fail = 0;
+        const progress = document.getElementById('syncProgress');
+        if (progress) progress.textContent = '同步中...';
+
+        for (const node of nodes) {
+            if (!node.thumbnail) continue;
+            // 检查是否已存在
+            try {
+                await wusiFile.read(node.thumbnail);
+                success++; // 已存在跳过
+                continue;
+            } catch (e) {
+                // 不存在，尝试下载
+                const fullUrl = baseUrl + node.thumbnail;
+                try {
+                    const resp = await fetch(fullUrl);
+                    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                    const blob = await resp.blob();
+                    if (blob.size < 100) throw new Error('图片过小');
+                    await wusiFile.save(node.thumbnail, blob);
+                    success++;
+                } catch (err) {
+                    console.warn('下载失败:', node.thumbnail, err);
+                    fail++;
+                }
+            }
+        }
+        if (progress) progress.textContent = `完成：成功 ${success}，失败 ${fail}`;
+        showToast(`同步完成：成功 ${success}，失败 ${fail}`);
+        // 重新渲染以显示缩略图
+        renderNodeList(mapIdx, diffIdx);
+    }
+
+    // 全局批量同步（设置页面）
+    async function batchSyncAll() {
+        const baseUrl = app.settings.imageBaseUrl;
+        if (!baseUrl) {
+            showToast('请先设置图片源URL');
+            return;
+        }
+        const allNodes = app.data.nodes;
+        let success = 0, fail = 0;
+        const progress = document.getElementById('syncProgress');
+        if (progress) progress.textContent = '全量同步中...';
+
+        for (const node of allNodes) {
+            if (!node.thumbnail) continue;
+            try {
+                await wusiFile.read(node.thumbnail);
+                success++;
+                continue;
+            } catch (e) {
+                const fullUrl = baseUrl + node.thumbnail;
+                try {
+                    const resp = await fetch(fullUrl);
+                    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                    const blob = await resp.blob();
+                    if (blob.size < 100) throw new Error('图片过小');
+                    await wusiFile.save(node.thumbnail, blob);
+                    success++;
+                } catch (err) {
+                    console.warn('下载失败:', node.thumbnail, err);
+                    fail++;
+                }
+            }
+        }
+        if (progress) progress.textContent = `全量完成：成功 ${success}，失败 ${fail}`;
+        showToast(`全量同步完成：成功 ${success}，失败 ${fail}`);
+        // 刷新当前节点列表（如果在地图tab）
+        const activePage = document.querySelector('#mapTabContent .page.active');
+        if (activePage && activePage.id === 'page-node-list') {
+            const mapIdx = app.currentMapIdx;
+            const diffIdx = app.currentDiffIdx;
+            renderNodeList(mapIdx, diffIdx);
+        }
+    }
+
+    // ================================================================
+    //  编辑节点（含截取缩略图功能）
+    // ================================================================
+    async function openEditNode(nodeId, mapIdx, diffIdx) {
+        const node = nodeId ? getNodeById(nodeId) : null;
+        app.editingNodeId = nodeId || null;
+
+        document.getElementById('editPageTitle').textContent = node ? `编辑 · ${node.direction}${node.shape}` : '新建节点';
+        const container = document.getElementById('editFormContent');
+
+        const d = app.data;
+        const mapOptions = d.mapBooks.map((name, i) =>
+            `<option value="${i}" ${(node ? node.mapBookIndex === i : i === 0) ? 'selected' : ''}>${name}</option>`
+        ).join('');
+        const diffOptions = d.difficulties.map((name, i) =>
+            `<option value="${i}" ${(node ? node.difficultyIndex === i : i === 0) ? 'selected' : ''}>${name}</option>`
+        ).join('');
+
+        const aliases = node ? (node.aliases || []).join('\n') : '';
+        const steps = node ? (node.steps || []).join('\n') : '';
+
+        let thumbDataURL = '';
+        let fullmapDataURL = '';
+        if (node && node.thumbnail) thumbDataURL = await loadFileAsDataURL(node.thumbnail);
+        if (node && node.fullMap) fullmapDataURL = await loadFileAsDataURL(node.fullMap);
+
+        const hasFullMap = !!(node && node.fullMap);
+
+        container.innerHTML = `
+            <div class="form-group"><label>方向</label><input type="text" id="editDirection" value="${node ? node.direction : ''}" placeholder="如：右、左、南、北"></div>
+            <div class="form-group"><label>形状</label><input type="text" id="editShape" value="${node ? node.shape : ''}" placeholder="如：锤子门、Y门"></div>
+            <div class="form-group"><label>所属地图</label><select id="editMapIdx">${mapOptions}</select></div>
+            <div class="form-group"><label>难度</label><select id="editDiffIdx">${diffOptions}</select></div>
+            <div class="form-group"><label>别名（每行一个）</label><textarea id="editAliases" rows="2" placeholder="锤子门\n大锤">${aliases}</textarea></div>
+            <div class="form-group"><label>路线步骤（每行一步）</label><textarea id="editSteps" rows="3" placeholder="进门右转\n过楼梯间左转">${steps}</textarea></div>
+            <div class="form-group"><label>缩略图</label><div class="img-upload-row"><div class="preview" id="editThumbPreview">${thumbDataURL ? `<img src="${thumbDataURL}" alt="缩略图">` : '无图'}</div><button class="upload-btn" id="editThumbUpload">+ 添加缩略图</button>${node && node.thumbnail ? `<button class="upload-btn" id="editThumbClear" style="border-color:#e74c3c;color:#e74c3c;">清除</button>` : ''}<input type="file" id="editThumbInput" accept="image/*" style="display:none;"></div></div>
+            <div class="form-group"><label>完整大地图</label><div class="img-upload-row"><div class="preview" id="editFullmapPreview">${fullmapDataURL ? `<img src="${fullmapDataURL}" alt="完整地图">` : '无图'}</div><button class="upload-btn" id="editFullmapUpload">+ 添加完整地图</button>${node && node.fullMap ? `<button class="upload-btn" id="editFullmapClear" style="border-color:#e74c3c;color:#e74c3c;">清除</button>` : ''}<input type="file" id="editFullmapInput" accept="image/*" style="display:none;"></div></div>
+            <div class="form-group" id="cropFromFullmapGroup" style="${hasFullMap ? '' : 'display:none;'}">
+                <button class="btn btn-primary" id="cropFromFullmapBtn" style="width:100%;justify-content:center;display:flex;align-items:center;gap:6px;">✂️ 从全图截取缩略图</button>
+                <div style="font-size:12px;color:#aaa;margin-top:6px;">在完整地图上框选区域，自动生成缩略图</div>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;"><button class="btn btn-primary" id="editSaveBtn">保存</button><button class="btn" id="editCancelBtn">取消</button>${node ? `<button class="btn btn-danger" id="editDeleteBtn">删除</button>` : ''}</div>
+        `;
+
+        const thumbInput = document.getElementById('editThumbInput');
+        document.getElementById('editThumbUpload').onclick = () => thumbInput.click();
+        thumbInput.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const filename = generateFileName('.jpg');
+                await wusiFile.save(filename, file);
+                const preview = document.getElementById('editThumbPreview');
+                preview.innerHTML = `<img src="${URL.createObjectURL(file)}" alt="缩略图">`;
+                thumbInput.dataset.filename = filename;
+            }
+        };
+
+        const fullmapInput = document.getElementById('editFullmapInput');
+        document.getElementById('editFullmapUpload').onclick = () => fullmapInput.click();
+        fullmapInput.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const filename = generateFileName('.jpg');
+                await wusiFile.save(filename, file);
+                const preview = document.getElementById('editFullmapPreview');
+                preview.innerHTML = `<img src="${URL.createObjectURL(file)}" alt="完整地图">`;
+                fullmapInput.dataset.filename = filename;
+                document.getElementById('cropFromFullmapGroup').style.display = 'block';
+                const node = app.editingNodeId ? getNodeById(app.editingNodeId) : null;
+                if (node) {
+                    node._tempFullMap = filename;
+                } else {
+                    app._tempNewFullMap = filename;
+                }
+            }
+        };
+
+        const fullmapClear = document.getElementById('editFullmapClear');
+        if (fullmapClear) fullmapClear.onclick = () => {
+            if (node && node.fullMap) { wusiFile.delete(node.fullMap).catch(()=>{}); node.fullMap = ''; }
+            document.getElementById('editFullmapPreview').innerHTML = '无图';
+            fullmapInput.dataset.filename = '';
+            document.getElementById('cropFromFullmapGroup').style.display = 'none';
+            if (node) node._tempFullMap = '';
+            else app._tempNewFullMap = '';
+        };
+
+        const thumbClear = document.getElementById('editThumbClear');
+        if (thumbClear) thumbClear.onclick = () => {
+            if (node && node.thumbnail) { wusiFile.delete(node.thumbnail).catch(()=>{}); node.thumbnail = ''; }
+            document.getElementById('editThumbPreview').innerHTML = '无图';
+            thumbInput.dataset.filename = '';
+        };
+
+        document.getElementById('cropFromFullmapBtn').onclick = async () => {
+            let fullMapFilename = '';
+            const editingNode = app.editingNodeId ? getNodeById(app.editingNodeId) : null;
+            if (editingNode && editingNode.fullMap) {
+                fullMapFilename = editingNode.fullMap;
+            } else if (editingNode && editingNode._tempFullMap) {
+                fullMapFilename = editingNode._tempFullMap;
+            } else if (app._tempNewFullMap) {
+                fullMapFilename = app._tempNewFullMap;
+            } else {
+                const input = document.getElementById('editFullmapInput');
+                if (input && input.dataset.filename) fullMapFilename = input.dataset.filename;
+            }
+            if (!fullMapFilename) {
+                showToast('请先上传完整地图');
+                return;
+            }
+            try {
+                const blob = await wusiFile.read(fullMapFilename);
+                const url = URL.createObjectURL(blob);
+                openCropModal(url, async (croppedBlob) => {
+                    const thumbFilename = generateFileName('.jpg');
+                    await wusiFile.save(thumbFilename, croppedBlob);
+                    const preview = document.getElementById('editThumbPreview');
+                    preview.innerHTML = `<img src="${URL.createObjectURL(croppedBlob)}" alt="缩略图">`;
+                    document.getElementById('editThumbInput').dataset.filename = thumbFilename;
+                    const oldNode = app.editingNodeId ? getNodeById(app.editingNodeId) : null;
+                    if (oldNode && oldNode.thumbnail) {
+                        wusiFile.delete(oldNode.thumbnail).catch(()=>{});
+                    }
+                    showToast('缩略图截取成功！');
+                });
+            } catch (e) {
+                showToast('加载完整地图失败: ' + e.message);
+            }
+        };
+
+        document.getElementById('editSaveBtn').onclick = () => saveNodeForm();
+        document.getElementById('editCancelBtn').onclick = () => {
+            if (app.editingNodeId) {
+                const n = getNodeById(app.editingNodeId);
+                if (n) { renderNodeList(n.mapBookIndex, n.difficultyIndex); showMapPage('page-node-list'); } else { showMapPage('page-home'); }
+            } else { const selMap = parseInt(document.getElementById('editMapIdx').value); const selDiff = parseInt(document.getElementById('editDiffIdx').value); renderNodeList(selMap, selDiff); showMapPage('page-node-list'); }
+        };
+        const deleteBtn = document.getElementById('editDeleteBtn');
+        if (deleteBtn) deleteBtn.onclick = () => { if (confirm('确定删除这个节点吗？')) { deleteNode(node.id); renderNodeList(node.mapBookIndex, node.difficultyIndex); showMapPage('page-node-list'); } };
+
+        showMapPage('page-edit');
+    }
+
+    // ================================================================
+    //  截取模态框逻辑（不变）
+    // ================================================================
+    let cropState = {
+        isDragging: false,
+        startX: 0, startY: 0,
+        endX: 0, endY: 0,
+        img: null,
+        imgNaturalWidth: 0,
+        imgNaturalHeight: 0,
+        displayScale: 1,
+        canvas: null,
+        ctx: null,
+        onConfirm: null
+    };
+
+    function openCropModal(imgUrl, onConfirm) {
+        const modal = document.getElementById('cropModal');
+        const canvas = document.getElementById('cropCanvas');
+        const ctx = canvas.getContext('2d');
+
+        cropState.canvas = canvas;
+        cropState.ctx = ctx;
+        cropState.onConfirm = onConfirm;
+        cropState.isDragging = false;
+        cropState.startX = 0;
+        cropState.startY = 0;
+        cropState.endX = 0;
+        cropState.endY = 0;
+
+        const img = new Image();
+        img.onload = () => {
+            cropState.img = img;
+            cropState.imgNaturalWidth = img.naturalWidth;
+            cropState.imgNaturalHeight = img.naturalHeight;
+            fitImageToCanvas();
+            drawCanvas();
+            modal.classList.add('show');
+        };
+        img.onerror = () => {
+            showToast('图片加载失败');
+        };
+        img.src = imgUrl;
+    }
+
+    function fitImageToCanvas() {
+        const canvas = cropState.canvas;
+        const img = cropState.img;
+        if (!img) return;
+        const container = document.getElementById('cropModalBody');
+        const maxW = container.clientWidth - 20 || window.innerWidth - 60;
+        const maxH = container.clientHeight - 20 || window.innerHeight * 0.6;
+        const scaleX = maxW / img.naturalWidth;
+        const scaleY = maxH / img.naturalHeight;
+        cropState.displayScale = Math.min(scaleX, scaleY, 1.5);
+        const w = img.naturalWidth * cropState.displayScale;
+        const h = img.naturalHeight * cropState.displayScale;
+        canvas.width = w;
+        canvas.height = h;
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+    }
+
+    function drawCanvas() {
+        const ctx = cropState.ctx;
+        const canvas = cropState.canvas;
+        const img = cropState.img;
+        if (!img) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        if (cropState.isDragging || (cropState.startX !== cropState.endX && cropState.startY !== cropState.endY)) {
+            const x = Math.min(cropState.startX, cropState.endX);
+            const y = Math.min(cropState.startY, cropState.endY);
+            const w = Math.abs(cropState.endX - cropState.startX);
+            const h = Math.abs(cropState.endY - cropState.startY);
+            if (w > 2 && h > 2) {
+                ctx.save();
+                ctx.fillStyle = 'rgba(0,0,0,0.3)';
+                ctx.fillRect(x, y, w, h);
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([6, 4]);
+                ctx.strokeRect(x, y, w, h);
+                ctx.restore();
+                ctx.save();
+                ctx.fillStyle = 'rgba(0,0,0,0.6)';
+                ctx.fillRect(x+4, y-22, 80, 20);
+                ctx.fillStyle = '#fff';
+                ctx.font = '11px sans-serif';
+                ctx.fillText(`${Math.round(w/cropState.displayScale)}×${Math.round(h/cropState.displayScale)}`, x+8, y-6);
+                ctx.restore();
+            }
+        }
+    }
+
+    document.getElementById('cropCanvas').addEventListener('mousedown', (e) => {
+        const rect = cropState.canvas.getBoundingClientRect();
+        const scaleX = cropState.canvas.width / rect.width;
+        const scaleY = cropState.canvas.height / rect.height;
+        cropState.startX = (e.clientX - rect.left) * scaleX;
+        cropState.startY = (e.clientY - rect.top) * scaleY;
+        cropState.endX = cropState.startX;
+        cropState.endY = cropState.startY;
+        cropState.isDragging = true;
+        drawCanvas();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!cropState.isDragging) return;
+        const rect = cropState.canvas.getBoundingClientRect();
+        const scaleX = cropState.canvas.width / rect.width;
+        const scaleY = cropState.canvas.height / rect.height;
+        cropState.endX = Math.min(Math.max((e.clientX - rect.left) * scaleX, 0), cropState.canvas.width);
+        cropState.endY = Math.min(Math.max((e.clientY - rect.top) * scaleY, 0), cropState.canvas.height);
+        drawCanvas();
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (cropState.isDragging) {
+            cropState.isDragging = false;
+            drawCanvas();
+        }
+    });
+
+    document.getElementById('cropCanvas').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        const touch = e.touches[0];
+        const rect = cropState.canvas.getBoundingClientRect();
+        const scaleX = cropState.canvas.width / rect.width;
+        const scaleY = cropState.canvas.height / rect.height;
+        cropState.startX = (touch.clientX - rect.left) * scaleX;
+        cropState.startY = (touch.clientY - rect.top) * scaleY;
+        cropState.endX = cropState.startX;
+        cropState.endY = cropState.startY;
+        cropState.isDragging = true;
+        drawCanvas();
+    }, { passive: false });
+
+    document.getElementById('cropCanvas').addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        if (!cropState.isDragging) return;
+        const touch = e.touches[0];
+        const rect = cropState.canvas.getBoundingClientRect();
+        const scaleX = cropState.canvas.width / rect.width;
+        const scaleY = cropState.canvas.height / rect.height;
+        cropState.endX = Math.min(Math.max((touch.clientX - rect.left) * scaleX, 0), cropState.canvas.width);
+        cropState.endY = Math.min(Math.max((touch.clientY - rect.top) * scaleY, 0), cropState.canvas.height);
+        drawCanvas();
+    }, { passive: false });
+
+    document.getElementById('cropCanvas').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        if (cropState.isDragging) {
+            cropState.isDragging = false;
+            drawCanvas();
+        }
+    }, { passive: false });
+
+    document.getElementById('confirmCropBtn').onclick = () => {
+        const canvas = cropState.canvas;
+        const ctx = cropState.ctx;
+        const x = Math.min(cropState.startX, cropState.endX);
+        const y = Math.min(cropState.startY, cropState.endY);
+        const w = Math.abs(cropState.endX - cropState.startX);
+        const h = Math.abs(cropState.endY - cropState.startY);
+        if (w < 4 || h < 4) {
+            showToast('请拖拽选择有效区域');
+            return;
+        }
+        const imageData = ctx.getImageData(x, y, w, h);
+        const cropCanvas = document.createElement('canvas');
+        cropCanvas.width = w;
+        cropCanvas.height = h;
+        const cropCtx = cropCanvas.getContext('2d');
+        cropCtx.putImageData(imageData, 0, 0);
+        cropCanvas.toBlob((blob) => {
+            if (blob && cropState.onConfirm) {
+                cropState.onConfirm(blob);
+            } else {
+                showToast('截取失败');
+            }
+            closeCropModal();
+        }, 'image/jpeg', 0.92);
+    };
+
+    document.getElementById('cancelCropBtn').onclick = closeCropModal;
+    document.getElementById('closeCropModal').onclick = closeCropModal;
+    document.getElementById('cropModal').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeCropModal();
+    });
+
+    function closeCropModal() {
+        document.getElementById('cropModal').classList.remove('show');
+        cropState.isDragging = false;
+        cropState.onConfirm = null;
+        if (cropState.img) {
+            cropState.img = null;
+        }
+    }
+
+    window.addEventListener('resize', () => {
+        if (document.getElementById('cropModal').classList.contains('show')) {
+            fitImageToCanvas();
+            drawCanvas();
+        }
+    });
+
+    // ================================================================
+    //  保存节点表单
+    // ================================================================
+    function saveNodeForm() {
+        const direction = document.getElementById('editDirection').value.trim();
+        const shape = document.getElementById('editShape').value.trim();
+        const mapIdx = parseInt(document.getElementById('editMapIdx').value);
+        const diffIdx = parseInt(document.getElementById('editDiffIdx').value);
+        const aliasesRaw = document.getElementById('editAliases').value.trim();
+        const stepsRaw = document.getElementById('editSteps').value.trim();
+
+        if (!direction || !shape) { showToast('方向或形状不能为空'); return; }
+
+        const aliases = aliasesRaw ? aliasesRaw.split('\n').map(s => s.trim()).filter(s => s.length > 0) : [];
+        const steps = stepsRaw ? stepsRaw.split('\n').map(s => s.trim()).filter(s => s.length > 0) : [];
+
+        const thumbInput = document.getElementById('editThumbInput');
+        const fullmapInput = document.getElementById('editFullmapInput');
+        let thumbFilename = thumbInput.dataset.filename || '';
+        let fullmapFilename = fullmapInput.dataset.filename || '';
+
+        if (app.editingNodeId) {
+            const node = getNodeById(app.editingNodeId);
+            if (node) {
+                if (thumbFilename && node.thumbnail && thumbFilename !== node.thumbnail) { wusiFile.delete(node.thumbnail).catch(()=>{}); }
+                if (fullmapFilename && node.fullMap && fullmapFilename !== node.fullMap) { wusiFile.delete(node.fullMap).catch(()=>{}); }
+                const oldThumb = node.thumbnail;
+                const oldFull = node.fullMap;
+                node.direction = direction;
+                node.shape = shape;
+                node.mapBookIndex = mapIdx;
+                node.difficultyIndex = diffIdx;
+                node.aliases = aliases;
+                node.steps = steps;
+                node.thumbnail = thumbFilename || oldThumb;
+                node.fullMap = fullmapFilename || oldFull;
+                delete node._tempFullMap;
+                saveData(app.data).catch(()=>{});
+                renderNodeList(mapIdx, diffIdx);
+                showMapPage('page-node-list');
+            }
+        } else {
+            const newNode = { id: genId(), direction, shape, mapBookIndex: mapIdx, difficultyIndex: diffIdx, aliases, steps, thumbnail: thumbFilename || '', fullMap: fullmapFilename || '' };
+            app.data.nodes.push(newNode);
+            saveData(app.data).catch(()=>{});
+            renderNodeList(mapIdx, diffIdx);
+            showMapPage('page-node-list');
+        }
+        app._tempNewFullMap = '';
+    }
+
+    // ================================================================
+    //  导航核心（保持不变）
+    // ================================================================
+    function startNavigation(nodeId) {
+        cancelSpeech();
+        const node = getNodeById(nodeId);
+        if (!node || !node.steps || node.steps.length === 0) {
+            showToast('该节点无步骤');
+            return;
+        }
+
+        app.navContext = {
+            nodeId: node.id,
+            mapBookIdx: node.mapBookIndex,
+            difficultyIdx: node.difficultyIndex,
+            currentStep: 0,
+            steps: node.steps,
+            node: node
+        };
+        app.voiceState = 'idle';
+
+        document.getElementById('voiceMapSelect').value = node.mapBookIndex;
+        document.getElementById('voiceDiffSelect').value = node.difficultyIndex;
+
+        updateSelectedNodeName(node.direction + ' · ' + node.shape);
+
+        showFullMap(nodeId);
+        speakCurrentStep();
+    }
+
+    function updateSelectedNodeName(name) {
+        document.getElementById('selectNodeName').textContent = name;
+    }
+
+    function clearSelectedNodeName() {
+        document.getElementById('selectNodeName').textContent = '-- 未选择 --';
+    }
+
+    function speakCurrentStep() {
+        if (!app.navContext) return;
+        const ctx = app.navContext;
+        const idx = ctx.currentStep;
+        const steps = ctx.steps;
+
+        if (idx < 0 || idx >= steps.length) {
+            app.voiceState = 'idle';
+            updateVoiceUI(ctx);
+            return;
+        }
+
+        app.voiceState = 'speaking';
+        updateVoiceUI(ctx);
+
+        const text = steps[idx];
+        const settings = app.settings;
+
+        if (settings.customVoice) {
+            speakWithCustomAudio(text, () => {
+                app.voiceState = 'waitForNext';
+                updateVoiceUI(ctx);
+            });
+        } else {
+            if (window.speechSynthesis) {
+                window.speechSynthesis.cancel();
+                const utter = new SpeechSynthesisUtterance(text);
+                utter.lang = 'zh-CN';
+                utter.rate = settings.speed;
+                utter.pitch = settings.pitch;
+                if (settings.voiceName) {
+                    const voices = window.speechSynthesis.getVoices();
+                    const v = voices.find(v => v.name === settings.voiceName);
+                    if (v) utter.voice = v;
+                }
+                utter.onend = () => { app.voiceState = 'waitForNext'; updateVoiceUI(ctx); };
+                utter.onerror = () => { app.voiceState = 'waitForNext'; updateVoiceUI(ctx); };
+                app.utterance = utter;
+                window.speechSynthesis.speak(utter);
+            } else {
+                showToast('当前环境不支持语音合成');
+                app.voiceState = 'waitForNext';
+                updateVoiceUI(ctx);
+            }
+        }
+    }
+
+    function speakWithCustomAudio(text, onEnd) {
+        if (!app.settings.customVoice) { if (onEnd) onEnd(); return; }
+        loadFileAsBlobURL(app.settings.customVoice).then(url => {
+            if (!url) { if (onEnd) onEnd(); return; }
+            const audio = new Audio(url);
+            audio.onended = () => { URL.revokeObjectURL(url); if (onEnd) onEnd(); };
+            audio.onerror = () => { URL.revokeObjectURL(url); if (onEnd) onEnd(); };
+            audio.play().catch(() => { if (onEnd) onEnd(); });
+        }).catch(() => { if (onEnd) onEnd(); });
+    }
+
+    function nextStep() {
+        if (!app.navContext) return;
+        cancelSpeech();
+        const ctx = app.navContext;
+        if (ctx.currentStep < ctx.steps.length - 1) {
+            ctx.currentStep++;
+            speakCurrentStep();
+        } else {
+            showToast('已经是最后一步');
+        }
+    }
+
+    function prevStep() {
+        if (!app.navContext) return;
+        cancelSpeech();
+        const ctx = app.navContext;
+        if (ctx.currentStep > 0) {
+            ctx.currentStep--;
+            speakCurrentStep();
+        } else {
+            showToast('已经是第一步');
+        }
+    }
+
+    function cancelSpeech() {
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        if (app.utterance) { app.utterance = null; }
+        app.voiceState = 'idle';
+    }
+
+    function updateVoiceUI(ctx) {
+        const stepNumber = document.getElementById('navStepNumber');
+        const stepText = document.getElementById('navStepText');
+        const stepProgress = document.getElementById('navStepProgress');
+        const prevBtn = document.getElementById('prevStepBtn');
+        const nextBtn = document.getElementById('nextStepBtn');
+        const stateLabel = document.getElementById('navStateLabel');
+
+        if (!ctx) {
+            stepNumber.textContent = '';
+            stepText.textContent = '准备就绪，请选择节点或说出指令';
+            stepProgress.textContent = '';
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            stateLabel.textContent = '空闲';
+            return;
+        }
+
+        const idx = ctx.currentStep;
+        const total = ctx.steps.length;
+        stepNumber.textContent = `第 ${idx + 1} 步 / 共 ${total} 步`;
+        stepText.textContent = ctx.steps[idx] || '无步骤';
+        stepProgress.textContent = `${((idx + 1) / total * 100).toFixed(0)}%`;
+
+        prevBtn.disabled = idx === 0;
+        nextBtn.disabled = idx === total - 1;
+
+        if (app.voiceState === 'speaking') stateLabel.textContent = '播报中';
+        else if (app.voiceState === 'waitForNext') stateLabel.textContent = '等待下一步';
+        else stateLabel.textContent = '空闲';
+    }
+
+    // ================================================================
+    //  完整大图
+    // ================================================================
+    async function showFullMap(nodeId) {
+        const node = getNodeById(nodeId);
+        const img = document.getElementById('voiceFullmapImg');
+        const emptyDiv = document.getElementById('voiceFullmapEmpty');
+
+        if (app._currentFullmapURL) {
+            URL.revokeObjectURL(app._currentFullmapURL);
+            app._currentFullmapURL = null;
+        }
+
+        if (!node || !node.fullMap) {
+            img.style.display = 'none';
+            emptyDiv.style.display = 'block';
+            emptyDiv.innerHTML = '<div class="icon">🖼️</div>该节点未上传完整地图';
+            return;
+        }
+
+        try {
+            const url = await loadFileAsBlobURL(node.fullMap);
+            if (url) {
+                img.src = url;
+                img.style.display = 'block';
+                emptyDiv.style.display = 'none';
+                app._currentFullmapURL = url;
+                img.onclick = () => openZoomMap(url);
+            } else {
+                throw new Error('加载失败');
+            }
+        } catch (e) {
+            img.style.display = 'none';
+            emptyDiv.style.display = 'block';
+            emptyDiv.innerHTML = '<div class="icon">⚠️</div>地图加载失败';
+        }
+    }
+
+    // ================================================================
+    //  节点选择模态框（按方向分组）
+    // ================================================================
+    function openNodeSelectModal() {
+        const modal = document.getElementById('nodeSelectModal');
+        const list = document.getElementById('nodeSelectList');
+
+        const mapIdx = parseInt(document.getElementById('voiceMapSelect').value);
+        const diffIdx = parseInt(document.getElementById('voiceDiffSelect').value);
+        const nodes = getNodesFor(mapIdx, diffIdx);
+
+        if (nodes.length === 0) {
+            list.innerHTML = '<div style="text-align:center;color:var(--text-secondary);padding:30px 0;">当前模式下暂无节点</div>';
+        } else {
+            const groups = {};
+            const dirOrder = ['左', '右', '南', '北', '东', '西', '其他'];
+            nodes.forEach(node => {
+                const dir = node.direction || '其他';
+                if (!groups[dir]) groups[dir] = [];
+                groups[dir].push(node);
+            });
+            const sortedEntries = Object.entries(groups).sort((a, b) => {
+                const ia = dirOrder.indexOf(a[0]);
+                const ib = dirOrder.indexOf(b[0]);
+                if (ia === -1 && ib === -1) return a[0].localeCompare(b[0]);
+                if (ia === -1) return 1;
+                if (ib === -1) return -1;
+                return ia - ib;
+            });
+
+            let html = '';
+            for (const [dir, dirNodes] of sortedEntries) {
+                html += `<div class="group-divider">${dir} <span class="badge">${dirNodes.length}</span></div>`;
+                for (const node of dirNodes) {
+                    const aliasHint = (node.aliases && node.aliases.length > 0) ? '（别名：' + node.aliases.join(', ') + '）' : '';
+                    html += `<div class="node-option" data-node-id="${node.id}">
+                        <span class="dir">${node.direction}</span>
+                        <span class="shape">${node.shape}</span>
+                        <span class="alias-hint">${aliasHint}</span>
+                    </div>`;
+                }
+            }
+            list.innerHTML = html;
+
+            list.querySelectorAll('.node-option').forEach(el => {
+                el.addEventListener('click', () => {
+                    const nodeId = el.dataset.nodeId;
+                    modal.classList.remove('show');
+                    startNavigation(nodeId);
+                });
+            });
+        }
+
+        modal.classList.add('show');
+    }
+
+    document.getElementById('closeNodeSelectModal').onclick = () => {
+        document.getElementById('nodeSelectModal').classList.remove('show');
+    };
+    document.getElementById('nodeSelectModal').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) document.getElementById('nodeSelectModal').classList.remove('show');
+    });
+
+    // ================================================================
+    //  语音识别
+    // ================================================================
+    function startListening() {
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+            showToast('当前浏览器不支持语音识别');
+            return;
+        }
+        if (app.isListening) return;
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognizer = new SpeechRecognition();
+        recognizer.lang = 'zh-CN';
+        recognizer.continuous = true;
+        recognizer.interimResults = false;
+        recognizer.maxAlternatives = 1;
+
+        recognizer.onresult = (event) => {
+            let transcript = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                if (event.results[i].isFinal) {
+                    transcript += event.results[i][0].transcript;
+                }
+            }
+            if (transcript) {
+                processVoiceCommand(transcript);
+            }
+        };
+
+        recognizer.onerror = (event) => {
+            console.warn('语音识别错误:', event.error);
+            if (event.error === 'not-allowed') {
+                showToast('请允许使用麦克风');
+                app.isListening = false;
+                updateRecordingStatus();
+                return;
+            }
+            if (app.isListening) {
+                setTimeout(() => {
+                    if (app.isListening) { try { recognizer.start(); } catch(_) {} }
+                }, 500);
+            }
+        };
+
+        recognizer.onend = () => {
+            if (app.isListening) { try { recognizer.start(); } catch(_) {} }
+        };
+
+        try {
+            recognizer.start();
+            app.isListening = true;
+            app.recognizer = recognizer;
+            app._recRestartCount = 0;
+            updateRecordingStatus();
+        } catch (e) {
+            showToast('语音启动失败');
+        }
+    }
+
+    function stopListening() {
+        if (!app.isListening) return;
+        if (app.recognizer) { try { app.recognizer.stop(); } catch(_) {} app.recognizer = null; }
+        app.isListening = false;
+        updateRecordingStatus();
+    }
+
+    function toggleListening() {
+        if (app.isListening) stopListening();
+        else startListening();
+        updateVoiceButton();
+    }
+
+    function updateVoiceButton() {
+        const btn = document.getElementById('navVoiceBtn');
+        const dot = document.getElementById('navVoiceDot');
+        const label = document.getElementById('navVoiceLabel');
+
+        if (app.isListening) {
+            label.textContent = '停止录音';
+            dot.className = 'dot listening';
+        } else {
+            label.textContent = '开始录音';
+            dot.className = 'dot';
+            if (app.voiceState === 'speaking') dot.className = 'dot speaking';
+        }
+    }
+
+    function updateRecordingStatus() {
+        const recIcon = document.getElementById('recIcon');
+        const statusText = document.getElementById('recStatusText');
+        if (app.isListening) {
+            recIcon.className = 'rec-icon active';
+            statusText.textContent = '🎤 正在录音中，随时说出指令，点击「停止录音」结束';
+        } else {
+            recIcon.className = 'rec-icon inactive';
+            statusText.textContent = '录音已停止，点击「开始录音」持续聆听';
+        }
+    }
+
+    // ================================================================
+    //  语音指令处理
+    // ================================================================
+    function processVoiceCommand(text) {
+        console.log('语音输入:', text);
+        const trimmed = text.trim().toLowerCase();
+        if (!trimmed) return;
+
+        const modePattern = /设置模式(?:为)?\s*(.+?)\s+(.+)/;
+        const modeMatch = trimmed.match(modePattern);
+        if (modeMatch) {
+            const mapName = modeMatch[1].trim();
+            const diffName = modeMatch[2].trim();
+            const d = app.data;
+            const mapIdx = d.mapBooks.findIndex(m => m === mapName);
+            const diffIdx = d.difficulties.findIndex(di => di === diffName);
+            if (mapIdx !== -1 && diffIdx !== -1) {
+                app.currentMapIdx = mapIdx;
+                app.currentDiffIdx = diffIdx;
+                document.getElementById('voiceMapSelect').value = mapIdx;
+                document.getElementById('voiceDiffSelect').value = diffIdx;
+                clearVoiceNavigation();
+                speakText(`已设置模式为${mapName}${diffName}`);
+            } else {
+                speakText('未识别到对应模式');
+            }
+            return;
+        }
+
+        const thisPattern = /这是(.+)/;
+        const thisMatch = trimmed.match(thisPattern);
+        if (thisMatch) {
+            const body = thisMatch[1].trim();
+            const parsed = parseDirectionAlias(body);
+            if (parsed) {
+                const mapIdx = parseInt(document.getElementById('voiceMapSelect').value);
+                const diffIdx = parseInt(document.getElementById('voiceDiffSelect').value);
+                const node = matchNodeByDirectionAndAlias(parsed.direction, parsed.alias, mapIdx, diffIdx);
+                if (node) {
+                    startNavigation(node.id);
+                } else {
+                    speakText('未找到匹配的节点');
+                }
+            } else {
+                speakText('方向或别名识别失败，请说这是右锤子门之类的');
+            }
+            return;
+        }
+
+        if (trimmed.includes('下一步') || trimmed.includes('好') || trimmed.includes('走') || trimmed.includes('行') || trimmed.includes('继续')) {
+            nextStep();
+            return;
+        }
+        if (trimmed.includes('上一步') || trimmed.includes('返回') || trimmed.includes('后退')) {
+            prevStep();
+            return;
+        }
+    }
+
+    function parseDirectionAlias(text) {
+        let cleaned = text.replace(/[，,、。.!！?？\s]/g, '');
+        let body = cleaned;
+        if (body.startsWith('这是')) body = body.slice(2);
+        if (body.endsWith('图')) body = body.slice(0, -1);
+
+        const directions = ['左', '右', '南', '北', '东', '西'];
+        let direction = '';
+        let rest = body;
+        for (const d of directions) {
+            if (body.startsWith(d)) { direction = d; rest = body.slice(d.length); break; }
+        }
+        if (!direction) {
+            for (const d of directions) {
+                if (body.endsWith(d)) { direction = d; rest = body.slice(0, -d.length); break; }
+            }
+        }
+        if (direction && rest) return { direction, alias: rest };
+        return null;
+    }
+
+    function matchNodeByDirectionAndAlias(direction, alias, mapIdx, diffIdx) {
+        const nodes = getNodesFor(mapIdx, diffIdx);
+        for (const n of nodes) {
+            if (n.direction === direction && (n.aliases || []).some(a => a === alias)) return n;
+        }
+        return null;
+    }
+
+    function speakText(text) {
+        if (window.speechSynthesis) {
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'zh-CN';
+            utter.rate = app.settings.speed;
+            utter.pitch = app.settings.pitch;
+            if (app.settings.voiceName) {
+                const voices = window.speechSynthesis.getVoices();
+                const v = voices.find(v => v.name === app.settings.voiceName);
+                if (v) utter.voice = v;
+            }
+            window.speechSynthesis.speak(utter);
+        }
+    }
+
+    // ================================================================
+    //  语音面板初始化
+    // ================================================================
+    function clearVoiceNavigation() {
+        cancelSpeech();
+        app.navContext = null;
+        updateVoiceUI(null);
+        const img = document.getElementById('voiceFullmapImg');
+        const emptyDiv = document.getElementById('voiceFullmapEmpty');
+        img.style.display = 'none';
+        emptyDiv.style.display = 'block';
+        emptyDiv.innerHTML = '<div class="icon">🖼️</div>选择节点后显示完整地图';
+        if (app._currentFullmapURL) { URL.revokeObjectURL(app._currentFullmapURL); app._currentFullmapURL = null; }
+        clearSelectedNodeName();
+    }
+
+    function initVoicePanel() {
+        const mapSelect = document.getElementById('voiceMapSelect');
+        const diffSelect = document.getElementById('voiceDiffSelect');
+        const d = app.data;
+
+        mapSelect.innerHTML = d.mapBooks.map((name, i) => `<option value="${i}">${name}</option>`).join('');
+        diffSelect.innerHTML = d.difficulties.map((name, i) => `<option value="${i}">${name}</option>`).join('');
+
+        mapSelect.value = app.currentMapIdx;
+        diffSelect.value = app.currentDiffIdx;
+
+        mapSelect.onchange = () => {
+            app.currentMapIdx = parseInt(mapSelect.value);
+            clearVoiceNavigation();
+            updateRecordingStatus();
+        };
+        diffSelect.onchange = () => {
+            app.currentDiffIdx = parseInt(diffSelect.value);
+            clearVoiceNavigation();
+            updateRecordingStatus();
+        };
+
+        document.getElementById('selectNodeBtn').onclick = openNodeSelectModal;
+
+        document.getElementById('nextStepBtn').onclick = nextStep;
+        document.getElementById('prevStepBtn').onclick = prevStep;
+        document.getElementById('navVoiceBtn').onclick = toggleListening;
+
+        updateVoiceButton();
+        updateRecordingStatus();
+    }
+
+    // ================================================================
+    //  设置页面（增加图片源URL和批量同步）
+    // ================================================================
+    function initSettings() {
+        const speedSlider = document.getElementById('speedSlider');
+        const pitchSlider = document.getElementById('pitchSlider');
+        const voiceSelect = document.getElementById('voiceSelect');
+        const voiceFileInput = document.getElementById('voiceFileInput');
+        const voiceFileStatus = document.getElementById('voiceFileStatus');
+        const voiceFileClear = document.getElementById('voiceFileClear');
+
+        speedSlider.value = app.settings.speed;
+        pitchSlider.value = app.settings.pitch;
+        document.getElementById('speedValue').textContent = app.settings.speed;
+        document.getElementById('pitchValue').textContent = app.settings.pitch;
+
+        speedSlider.oninput = () => {
+            const val = parseFloat(speedSlider.value);
+            app.settings.speed = val;
+            document.getElementById('speedValue').textContent = val;
+            saveSettings(app.settings);
+        };
+        pitchSlider.oninput = () => {
+            const val = parseFloat(pitchSlider.value);
+            app.settings.pitch = val;
+            document.getElementById('pitchValue').textContent = val;
+            saveSettings(app.settings);
+        };
+
+        function loadVoices() {
+            const voices = window.speechSynthesis.getVoices();
+            voiceSelect.innerHTML = '<option value="">系统默认</option>' + voices.map(v => `<option value="${v.name}" ${app.settings.voiceName === v.name ? 'selected' : ''}>${v.name}</option>`).join('');
+        }
+        loadVoices();
+        if (window.speechSynthesis.onvoiceschanged !== undefined) {
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        voiceSelect.onchange = () => {
+            app.settings.voiceName = voiceSelect.value;
+            saveSettings(app.settings);
+        };
+
+        if (app.settings.customVoice) voiceFileStatus.textContent = '已上传：' + app.settings.customVoice;
+
+        voiceFileInput.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const ext = file.name.endsWith('.mp3') ? '.mp3' : file.name.endsWith('.wav') ? '.wav' : '.ogg';
+                const filename = generateFileName(ext);
+                try {
+                    await wusiFile.save(filename, file);
+                    if (app.settings.customVoice) wusiFile.delete(app.settings.customVoice).catch(()=>{});
+                    app.settings.customVoice = filename;
+                    saveSettings(app.settings);
+                    voiceFileStatus.textContent = '已上传：' + filename;
+                    showToast('自定义语音包已保存');
+                } catch (e) { showToast('上传失败: ' + e.message); }
+            }
+        };
+
+        voiceFileClear.onclick = async () => {
+            if (app.settings.customVoice) {
+                await wusiFile.delete(app.settings.customVoice).catch(()=>{});
+                app.settings.customVoice = '';
+                saveSettings(app.settings);
+                voiceFileStatus.textContent = '未上传';
+                showToast('已清除语音包');
+            }
+        };
+
+        // ---- 图片源URL设置 ----
+        const imageUrlInput = document.getElementById('imageBaseUrl');
+        const saveUrlBtn = document.getElementById('saveImageUrlBtn');
+        const batchSyncBtn = document.getElementById('batchSyncThumbBtn');
+
+        imageUrlInput.value = app.settings.imageBaseUrl || '';
+
+        saveUrlBtn.onclick = () => {
+            const url = imageUrlInput.value.trim();
+            if (url && !url.endsWith('/')) {
+                app.settings.imageBaseUrl = url + '/';
+            } else {
+                app.settings.imageBaseUrl = url;
+            }
+            saveSettings(app.settings);
+            showToast('图片URL已保存');
+            // 刷新同步按钮显示
+            const syncBtn = document.getElementById('syncThumbBtn');
+            if (syncBtn) syncBtn.style.display = app.settings.imageBaseUrl ? 'inline-flex' : 'none';
+        };
+
+        batchSyncBtn.onclick = batchSyncAll;
+    }
+
+    // ================================================================
+    //  启动
+    // ================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+        renderHome();
+        initVoicePanel();
+        initSettings();
+
+        document.querySelectorAll('.bottom-nav .nav-tab').forEach(btn => {
+            btn.addEventListener('click', () => { switchTab(btn.dataset.tab); });
+        });
+
+        switchTab('map');
+
+        window.addEventListener('beforeunload', () => {
+            stopListening();
+            if (window.speechSynthesis) window.speechSynthesis.cancel();
+        });
+    });
+</script>
+</body>
+</html>
